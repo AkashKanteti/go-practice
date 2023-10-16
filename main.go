@@ -1,23 +1,14 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-
-	"rsc.io/quote"
+	"time"
 )
 
 func main() {
-	fmt.Printf(quote.Go())
-	scanner := bufio.NewScanner(os.Stdin)
-
-	// Write the data to standard input
-	scanner.Scan()
-	text := scanner.Text()
-	fmt.Println(text)
-	// scanner.Scan()
-
+	date := time.Now()
+	fmt.Printf("%s\n", date)
+	date = date.AddDate(0, 1, -date.Day())
+	var dates string = date.Format("02-01-2006")
+	fmt.Printf("%s", dates)
 }
-
-//echo 33 | ./main current usage
