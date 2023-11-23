@@ -34,6 +34,6 @@ func main() {
 	flag.Var(&jobRunner, "jobRunner", "Job to run. Valid Job:kafkaConsumer or subscriptions")
 
 	flag.Parse()
-	fmt.Printf("%v", string(jobRunner) == "")
+	fmt.Printf("%v", jobRunner)
 
 }
