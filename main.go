@@ -1,23 +1,39 @@
 package main
 
 import (
-	"bufio"
+	"flag"
 	"fmt"
-	"os"
+)
 
-	"rsc.io/quote"
+type JobType string
+
+func (j *JobType) Set(s string) error {
+	switch s {
+	case "kafkaConsumer":
+		*j = KafkaConsumer
+	case "subscriptions":
+		*j = Subscriptions
+	}
+	return nil
+}
+
+// implemented some methods in flag.Value interface
+func (j *JobType) String() string {
+
+	return string(*j)
+}
+
+const (
+	KafkaConsumer JobType = "kafkaConsumer"
+	Subscriptions JobType = "subscriptions"
 )
 
 func main() {
-	fmt.Printf(quote.Go())
-	scanner := bufio.NewScanner(os.Stdin)
 
-	// Write the data to standard input
-	scanner.Scan()
-	text := scanner.Text()
-	fmt.Println(text)
-	// scanner.Scan()
+	var jobRunner JobType
+	flag.Var(&jobRunner, "jobRunner", "Job to run. Valid Job:kafkaConsumer or subscriptions")
+
+	flag.Parse()
+	fmt.Printf("%v", string(jobRunner) == "")
 
 }
-
-//echo 33 | ./main current usage
