@@ -1,27 +1,12 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 )
 
 type JobType string
 
-func (j *JobType) Set(s string) error {
-	switch s {
-	case "kafkaConsumer":
-		*j = KafkaConsumer
-	case "subscriptions":
-		*j = Subscriptions
-	}
-	return nil
-}
-
 // implemented some methods in flag.Value interface
-func (j *JobType) String() string {
-
-	return string(*j)
-}
 
 const (
 	KafkaConsumer JobType = "kafkaConsumer"
@@ -29,11 +14,17 @@ const (
 )
 
 func main() {
+	// fmt.Printf("%v", jobRunner)
+	// ok := funs()
+	// fmt.Printf("%v", ok)
+	switch funs() {
+	case KafkaConsumer:
+		fmt.Printf(string(KafkaConsumer))
+	case Subscriptions:
+		fmt.Printf(string(Subscriptions))
+	}
+}
 
-	var jobRunner JobType
-	flag.Var(&jobRunner, "jobRunner", "Job to run. Valid Job:kafkaConsumer or subscriptions")
-
-	flag.Parse()
-	fmt.Printf("%v", jobRunner)
-
+func funs() JobType {
+	return "subscriptions"
 }
