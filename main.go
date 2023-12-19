@@ -1,23 +1,17 @@
 package main
 
 import (
-	"bufio"
+	"flag"
 	"fmt"
 	"os"
-
-	"rsc.io/quote"
 )
 
 func main() {
-	fmt.Printf(quote.Go())
-	scanner := bufio.NewScanner(os.Stdin)
-
-	// Write the data to standard input
-	scanner.Scan()
-	text := scanner.Text()
-	fmt.Println(text)
-	// scanner.Scan()
-
+	fileName := flag.String("c", "test file", "for taking file name")
+	flag.Parse()
+	cnt, err := os.ReadFile(*fileName)
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
+	fmt.Printf("%v %v", len(cnt), *fileName)
 }
-
-//echo 33 | ./main current usage
